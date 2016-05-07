@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f0f0f0">
+
+
+    <TextView
+        android:id="@+id/balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/balance"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_above="@+id/purchaseTotal"
+        android:layout_alignStart="@+id/gridView"
+        android:layout_marginStart="34dp" />
+
+    <TextView
+        android:id="@+id/add_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_balance"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_marginBottom="40dp"
+        android:layout_above="@+id/gridView"
+        android:layout_alignStart="@+id/balance" />
+
+    <TextView
+        android:id="@+id/purchaseTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/total"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginEnd="37dp"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_above="@+id/add_balance"
+        android:layout_alignEnd="@+id/gridView" />
+
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="fill_parent"
+        android:layout_height="290dp"
+        android:layout_above="@+id/bottom_layout"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:clickable="true"
+        android:columnWidth="100dp"
+        android:drawSelectorOnTop="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="5dp" />
+
+
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="false"
+        android:background="#f0f0f0"
+        android:scrollIndicators="none">
+
+        <TextView
+            android:id="@+id/quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/quantity"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_marginStart="31dp"
+            android:layout_alignTop="@+id/numberPicker"
+            android:layout_alignParentStart="true" />
+
+        <NumberPicker
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/numberPicker"
+            android:layout_above="@+id/purchase_button"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="30dp"
+            />
+
+        <Button
+            android:id="@+id/purchase_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:text="@string/purchase_button" />
+
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">VendingMachine</string>
+    <string name="app_name">Onfindo Vending Machine</string>
+
+    <string name="purchase_button">PURCHASE</string>
+    <string name="balance">Balance: </string>
+    <string name="add_balance">Add: </string>
+    <string name="total">£0:00</string>
+    <string name="quantity">Quantity: </string>
 </resources>
