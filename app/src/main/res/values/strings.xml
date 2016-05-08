@@ -9,4 +9,9 @@
     <string name="stock_image">stock_image</string>
     <string name="stock_item_image">stock_item_image</string>
     <string name="stock_item_img_description">stock_item_image</string>
+    <string name="insert_amount">Insert amount</string>
+    <string name="insufficient_funds_alert_message">Insufficient Funds, Please Insert More Coins</string>
+    <string name="retry">Retry</string>
+    <string name="collect">Collect</string>
+    <string name="insufficient_funds_image_description">Insufficient_funds_image</string>
 </resources>

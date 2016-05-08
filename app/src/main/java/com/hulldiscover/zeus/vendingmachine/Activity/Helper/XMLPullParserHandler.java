@@ -65,6 +65,9 @@ public class XMLPullParserHandler {
                         else if (tagName.equalsIgnoreCase("price")) {
                             vendingItem.setPrice(text);
                         }
+                        else if (tagName.equalsIgnoreCase("quantity")) {
+                            vendingItem.setQauntity(Integer.parseInt(text));
+                        }
                         break;
 
                     default:

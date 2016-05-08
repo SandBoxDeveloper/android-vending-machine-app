@@ -76,7 +76,7 @@ public class ListAdapter extends ArrayAdapter {
         //final String newPictureId = Integer.toString(downloadedPuzzles.getPictureId());
         // set the resource for the DownloadedPuzzlesHolder
         viewHolder.stockDescription.setText(item.getDescription());
-        viewHolder.stockPrice.setText(item.getPrice());
+        viewHolder.stockPrice.setText("£" +item.getPrice());
         //VendingItem stock_item = vending.get(position);
         Picasso.with(mContext)
                 .load(item.getImage())

@@ -12,12 +12,11 @@ public class VendingItem {
     private String image;
     private String description;
     private String price;
+    private int qauntity;
+
 
     public VendingItem() {
         super();
-         /*this.setImage(image);
-        this.setDescription(description);
-        this.setPrice(price);*/
     }
 
     public Bitmap getImageBitmap() {
@@ -52,8 +51,12 @@ public class VendingItem {
         this.price = price;
     }
 
-   /* @Override
-    public String toString () {
-        return description + ": " + "\n" + price + ": '";
-    }*/
+    public int getQauntity() {
+        return qauntity;
+    }
+
+    public void setQauntity(int qauntity) {
+        this.qauntity = qauntity;
+    }
+
 }
