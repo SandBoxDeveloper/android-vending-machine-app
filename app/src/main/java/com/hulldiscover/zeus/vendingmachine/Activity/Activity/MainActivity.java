@@ -1,12 +1,16 @@
 package com.hulldiscover.zeus.vendingmachine.Activity.Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.hulldiscover.zeus.vendingmachine.Activity.Adapter.ListAdapter;
@@ -43,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         mListview = (ListView)findViewById(R.id.listView);
 
         // list of vending stock
-        List<VendingItem> vendingItems;
+        final List<VendingItem> vendingItems;
         ArrayList<String> imageURLs = new ArrayList<String>();
 
         //mListAdapter = new ListAdapter(this, R.layout.listview_item);
@@ -65,11 +69,6 @@ public class MainActivity extends AppCompatActivity {
                 vendingItems.get(index).setImageBitmap(bitmapImagesToDraw.get(index));
             }*/
 
-            // Add all image file names to a list
-
-
-
-
             //ArrayAdapter<VendingItem> adapter = new ArrayAdapter<VendingItem>(this, android.R.layout.simple_list_item_2, vendingItems);
             //mListview.setAdapter(adapter);
             mListAdapter = new ListAdapter(this, R.layout.listview_item, vendingItems);
@@ -81,9 +80,26 @@ public class MainActivity extends AppCompatActivity {
                 item.setImage(imageURLs.get(index));
                 vendingItems.add(item);
             }*/
-            // set grid data
-            //mListAdapter.setGridData(vendingItems);
-            //mListAdapter.add(vendingItems);
+
+
+            //Grid view click event
+            mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                    //Get item at position
+                    VendingItem item = (VendingItem) parent.getItemAtPosition(position);
+
+                    Intent intent = new Intent(MainActivity.this, DetailedViewActivity.class);
+                    ImageView imageView = (ImageView) v.findViewById(R.id.item_image);
+
+                    //Pass the image title and url to DetailsActivity
+                    intent.putExtra("description", item.getDescription())
+                            .putExtra("price", item.getPrice())
+                            .putExtra("image", item.getImage());
+
+                    //Start details activity
+                    startActivity(intent);
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
