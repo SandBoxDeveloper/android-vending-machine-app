@@ -6,4 +6,6 @@
     <string name="add_balance">Add: </string>
     <string name="total">£0:00</string>
     <string name="quantity">Quantity: </string>
+    <string name="stock_image">stock_image</string>
+    <string name="stock_item_image">stock_item_image</string>
 </resources>

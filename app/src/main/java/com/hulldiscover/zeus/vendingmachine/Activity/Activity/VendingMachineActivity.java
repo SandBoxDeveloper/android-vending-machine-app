@@ -8,7 +8,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.hulldiscover.zeus.vendingmachine.Activity.Adapter.VendingMachineGridAdapter;
-import com.hulldiscover.zeus.vendingmachine.Activity.VendingItem;
+import com.hulldiscover.zeus.vendingmachine.Activity.Model.VendingItem;
 import com.hulldiscover.zeus.vendingmachine.R;
 
 import java.util.ArrayList;

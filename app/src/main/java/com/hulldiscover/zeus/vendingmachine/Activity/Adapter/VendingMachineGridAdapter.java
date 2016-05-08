@@ -2,7 +2,6 @@ package com.hulldiscover.zeus.vendingmachine.Activity.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hulldiscover.zeus.vendingmachine.Activity.VendingItem;
+import com.hulldiscover.zeus.vendingmachine.Activity.Model.VendingItem;
 import com.hulldiscover.zeus.vendingmachine.R;
 import com.squareup.picasso.Picasso;
 
@@ -59,9 +58,9 @@ public class VendingMachineGridAdapter extends ArrayAdapter<VendingItem> {
             holder = (ViewHolder) row.getTag();
         }
 
-        VendingItem item = mGridData.get(position);
-        holder.titleTextView.setText(Html.fromHtml(item.getDescription()));
-
+        VendingItem item = getItem(position);
+        holder.titleTextView.setText(item.getDescription());
+        //holder.imageView.setImageBitmap(item.getImageBitmap());
         Picasso.with(mContext).load(item.getImage()).into(holder.imageView);
         return row;
     }

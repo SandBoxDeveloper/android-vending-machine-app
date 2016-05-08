@@ -3,20 +3,20 @@
 
     <item>
         <id>A1</id>
-        <price>0.85</price>
+        <price>£0.85</price>
         <item_img>http://richmedia.channeladvisor.com/ImageDelivery/imageService?profileId=52000717&amp;imageID=45983501&amp;recipeId=243</item_img>
     </item>
 
     <item>
         <id>B3</id>
-        <price>0.70</price>
+        <price>£0.70</price>
         <item_img>http://richmedia.channeladvisor.com/ImageDelivery/imageService?profileId=52000717&amp;imageID=45983501&amp;recipeId=243</item_img>
     </item>
 
     <item>
         <id>E7</id>
-        <price>1.70</price>
-        <item_img>"http://richmedia.channeladvisor.com/ImageDelivery/imageService?profileId=52000717&amp;imageID=45983501&amp;recipeId=243</item_img>
+        <price>£1.70</price>
+        <item_img>http://richmedia.channeladvisor.com/ImageDelivery/imageService?profileId=52000717&amp;imageID=45983501&amp;recipeId=243</item_img>
     </item>
 
     <item>
@@ -27,19 +27,19 @@
 
     <item>
         <id>D3</id>
-        <price>1.00</price>
+        <price>£1.00</price>
         <item_img>http://richmedia.channeladvisor.com/ImageDelivery/imageService?profileId=52000717&amp;imageID=45983501&amp;recipeId=243</item_img>
     </item>
 
     <item>
         <id>F3</id>
-        <price>0.55</price>
+        <price>£0.55</price>
         <item_img>http://richmedia.channeladvisor.com/ImageDelivery/imageService?profileId=52000717&amp;imageID=45983501&amp;recipeId=243</item_img>
     </item>
 
     <item>
         <id>C3</id>
-        <price>0.45</price>
+        <price>£0.45</price>
         <item_img>http://richmedia.channeladvisor.com/ImageDelivery/imageService?profileId=52000717&amp;imageID=45983501&amp;recipeId=243</item_img>
     </item>
 </stock_item>
