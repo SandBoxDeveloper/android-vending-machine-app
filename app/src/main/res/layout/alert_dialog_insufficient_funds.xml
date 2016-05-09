@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:gravity="center_vertical">
 
-    <!--
+<!--
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -14,8 +14,18 @@
         android:layout_gravity="center_horizontal"
         android:contentDescription="@string/insufficient_funds_image_description"
         android:layout_above="@+id/insufficientFundTextDialog"
+        android:src="@drawable/img_collect_money"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="82dp" /> -->
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:id="@+id/insufficient_funds_image"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/img_collect_money"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/insufficientFundTextDialog"

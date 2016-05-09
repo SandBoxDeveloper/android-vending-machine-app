@@ -13,6 +13,7 @@
     <string name="insufficient_funds_alert_message">Insufficient Funds, Please Insert More Coins</string>
     <string name="retry">Retry</string>
     <string name="collect">Collect</string>
+    <string name="collect_change">Collect Change</string>
     <string name="insufficient_funds_image_description">Insufficient funds image</string>
     <string name="insert_coin_image_description">insert coin image</string>
 </resources>

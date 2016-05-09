@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.hulldiscover.zeus.vendingmachine.R;
 import com.squareup.picasso.Picasso;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +35,7 @@ public class DetailedViewActivity extends AppCompatActivity {
     private TextView itemPrice;
     private TextView userValue;
     private TextView insufficientFundsMessage;
+    private TextView collectChangeTextView;
     private EditText userCoinInput;
     private ImageView imageView;
     private ImageView chosenItem;
@@ -46,6 +49,8 @@ public class DetailedViewActivity extends AppCompatActivity {
     String mPrice = "0";
     String mChosenItem;
     public static double mInsertedAmount = 0.00;
+    Double mChange = 0.00;
+    Double mChangeCountTwoPound, mChangeCountOnePound, mChangeCountOneFiftyPence, mChangeCountTwentyPence, mChangeCountTenPence, mChangeCountFivePence, mChangeCountTwoPence, mChangeCountOnePence = 0.00;
 
     //change denominations
     //double[] denominations = {0.01, 0.02, 0.05, 0.10, 0.20, 0.50, 1.00, 2.00};
@@ -136,50 +141,164 @@ public class DetailedViewActivity extends AppCompatActivity {
                 // get how much money the user has inserted into machine
                 // calculate
                 //check quantity
-                Double calculation = 0.00;
                 double costOfItem = 0.00;
                 if(mInteger > 0) { // if quantity user wants is greater than 0
-                    calculation = mInsertedAmount - ((Double.parseDouble(mPrice)) * mInteger); // times mPrice by quantity
-                    costOfItem = (Double.parseDouble(mPrice)) * mInteger;
+                    mChange = mInsertedAmount - ((Double.parseDouble(mPrice)) * mInteger); // times mPrice by quantity
+                    costOfItem = (Double.parseDouble(mPrice)) * mInteger; // true cost of items
                 } else { // normal mPrice stands
-                    calculation = mInsertedAmount - (Double.parseDouble(mPrice));
+                    mChange = mInsertedAmount - (Double.parseDouble(mPrice));
                     costOfItem = Double.parseDouble(mPrice);
                 }
-                //Double calculation = mInsertedAmount - (Double.parseDouble(mPrice) * mInteger);
-                Log.d("PURCHASE BUTTON", " Calculation is: " + calculation);
+                double changeOwed = mChange;
+                //Double mChange = mInsertedAmount - (Double.parseDouble(mPrice) * mInteger);
+                Log.d("PURCHASE BUTTON", " Change owed is: " + changeOwed);
 
                 if(costOfItem > mInsertedAmount) { // user doesn't have enough money
                     // alert user insufficient funds, insert more mo mo money
                     customAlertDialog();
-                    Log.d("PURCHASE BUTTON", " Price of item cost more than Inserted Money " + calculation);
+                    Log.d("PURCHASE BUTTON", " Price of item cost more than Inserted Money " + mChange);
                 }
 
-                if (mInsertedAmount == costOfItem) { // exact amount needed to purchase item
+                if (mInsertedAmount == costOfItem) { // user has exact amount needed to purchase item
                     // dispense item to user
                     // with image view
                     chosenItemImageDialog();
                     Log.d("Quantity", "old value is:" + mQuantity);
                     mQuantity -= mInteger; // minus quantity
                     Log.d("Quantity", "new value is:" + mQuantity);
+                    // no change needed
                     mInsertedAmount = 0; // reset inserted amount
-                    Log.d("PURCHASE BUTTON", " Calculation == 0.00 " + calculation);
+                    Log.d("PURCHASE BUTTON", " Calculation == 0.00 " + mChange);
                     Log.d("PURCHASE BUTTON", "Item Dispensed");
                 }
 
-                /*if (mInsertedAmount > Double.parseDouble(mPrice)) { // user is owed change
+                if (mInsertedAmount > costOfItem) { // user is owed change
                     // dispense user's change
-                    double remainder = 0;
-                    for(int i = 8; i > 1; i--) {
-                        remainder = calculation % denominations.get(i-1);
-                        if(remainder < calculation) {
-                            changeCount.set(i, ((calculation - remainder) / denominations.get(i)));
-                            //Log.d("PURCHASE BUTTON", " Calculation > 0.00 " + calculation);
+                    double twoPound = mChange / 2.00;
+                    if (twoPound > 0) {
+
+                        mChange = mChange / 2.00;
+
+                        Log.d("CHANGE NORMAL", mChange + " £2 (s)");
+
+                        mChange = Math.floor(mChange);
+
+                        twoPound = mChange * 2.00;
+
+                        Log.d("CHANGE", mChange + " £2 (s)");
+
+                        mChangeCountTwoPound = twoPound; // keep record of how many two pounds to give in change to user
+                    }
+
+                    changeOwed = changeOwed - twoPound;
+                    Log.d("AMOUNT LEFT", "" +changeOwed);
+
+                    double onePound = changeOwed / 1.00;
+                    if (onePound > 0) {
+                        mChange = changeOwed / 1.00;
+                        mChange = Math.floor(mChange);
+                        onePound = mChange * 1.00;
+                        Log.d("CHANGE", mChange + " £1 (s)");
+                        mChangeCountOnePound = onePound; // keep record of how many one pounds to give in change to user
+
+                        if (mChange > 0) { // check to see if any £1 coins have been given as change
+                            changeOwed = changeOwed - onePound;
+                            Log.d("AMOUNT LEFT", "" +changeOwed);
                         }
-                        double change = Double.parseDouble(df.format(remainder));
+                    }
+
+                    double fiftyPence = changeOwed / 0.50;
+                    if (fiftyPence > 0) {
+                        mChange = changeOwed / 0.50;
+                        mChange = Math.floor(mChange);
+                        fiftyPence = mChange * 0.50; // how many fifty pence go into remaining change
+                        Log.d("CHANGE", mChange + " 50p (s)");
+                        mChangeCountOneFiftyPence = fiftyPence; // keep record of how many 50p to give in change to user
+
+                        if (mChange > 0) { // check to see if any 50p coins have been given as change
+                            changeOwed = changeOwed - fiftyPence;
+                            Log.d("AMOUNT LEFT", "" +changeOwed);
+                        }
+                    }
+
+                    double twentyPence = changeOwed / 0.20;
+                    if (twentyPence > 0) {
+                        mChange = mChange / 0.20;
+                        mChange = Math.floor(mChange);
+                        twentyPence = mChange * 0.20;
+                        Log.d("CHANGE", mChange + " 20p (s)");
+                        mChangeCountTwentyPence = twentyPence; // keep record of how many 20p to give in change to user
+
+                        if (mChange > 0) { // check to see if any 20p coins have been given as change
+                            changeOwed = changeOwed - twentyPence;
+                            Log.d("AMOUNT LEFT", "" +changeOwed);
+                        }
+                    }
+
+                    Log.d("20p CHECK", "" +changeOwed);
+                    double tenPence = changeOwed / 0.10;
+                    if (tenPence > 0) {
+                        mChange = changeOwed / 0.10;
+                        mChange = Math.floor(mChange);
+                        tenPence = mChange * 0.10;
+                        Log.d("CHANGE", mChange + " 10p (s)");
+                        mChangeCountTenPence = tenPence; // keep record of how many 10p to give in change to user
+
+                        if (mChange > 0) { // check to see if any 10p coins have been given as change
+                            changeOwed = changeOwed - tenPence;
+                            Log.d("AMOUNT LEFT", "" +changeOwed);
+                        }
 
                     }
-                    Log.d("PURCHASE BUTTON", " Change is " + remainder);
-                }*/
+
+                    double fivePence = changeOwed / 0.05;
+                    if (fivePence > 0) {
+                        mChange = changeOwed / 0.05;
+                        mChange = Math.floor(mChange);
+                        fivePence = mChange * 0.05;
+                        Log.d("CHANGE", mChange + " 5p (s)");
+                        mChangeCountFivePence = fivePence; // keep record of how many 5p to give in change to user
+
+                        if (mChange > 0) { // check to see if any 5p coins have been given as change
+                            changeOwed = changeOwed - fivePence;
+                            Log.d("AMOUNT LEFT", "" +changeOwed);
+                        }
+                    }
+
+                    double twoPence = changeOwed / 0.02;
+                    if (twoPence > 0) {
+                        mChange = changeOwed / 0.02;
+                        mChange = Math.floor(mChange);
+                        twoPence = mChange * 0.02;
+                        Log.d("CHANGE", mChange + " 2p (s)");
+                        mChangeCountTwoPence = twoPence; // keep record of how many 2p to give in change to user
+
+                        if (mChange > 0) { // check to see if any 2p coins have been given as change
+                            changeOwed = changeOwed - twoPence;
+                            Log.d("AMOUNT LEFT", "" +changeOwed);
+                        }
+                    }
+
+                    double onePence = mChange / 0.01;
+                    if (onePence > 0) {
+                        mChange = changeOwed / 0.01;
+                        mChange = Math.floor(mChange);
+                        onePence = mChange * 0.01;
+                        Log.d("CHANGE", mChange + " 1p (s)");
+                        mChangeCountOnePence = onePence; // keep record of how many 1p to give in change to user
+
+                        if (mChange > 0) { // check to see if any 1p coins have been given as change
+                            changeOwed = changeOwed - onePence;
+                            Log.d("AMOUNT LEFT", "" +changeOwed);
+                        }
+                    }
+
+                    giveChangeAlertDialog();
+                    //reset inserted coins amount
+                    mInsertedAmount = 0;
+                    Log.d("PURCHASE BUTTON", " User is owed change " + mChange);
+                    Log.d("PURCHASE BUTTON", " User is owed change " + mChangeCountTwoPound + "" + mChangeCountOnePound + "" + mChangeCountOneFiftyPence + "" +mChangeCountTwentyPence + mChangeCountTenPence + mChangeCountFivePence + mChangeCountTwoPence + mChangeCountOnePence);
+                }
             }
         });
     }
@@ -194,6 +313,15 @@ public class DetailedViewActivity extends AppCompatActivity {
             mInteger = 0; // reset value to 0 to prevent quantity less than 0
         }
         display(mInteger);
+    }
+
+    //function to round double
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
     private void display(int number) {
@@ -239,6 +367,29 @@ public class DetailedViewActivity extends AppCompatActivity {
 
         alertBuilder.setCancelable(true)
                 .setNegativeButton(R.string.retry, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        mInsertedAmount = 0;
+                        alertBuilder.setCancelable(true);
+                    }
+                });
+
+        Dialog dialog = alertBuilder.create();
+        dialog.show();
+        //dialog.getWindow().setLayout(900, 800);
+    }
+
+    public void giveChangeAlertDialog() {
+        View view = (LayoutInflater.from(DetailedViewActivity.this)).inflate(R.layout.alert_dialog_collect_change, null);
+        final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(DetailedViewActivity.this);
+        alertBuilder.setView(view);
+        collectChangeTextView = (TextView) view.findViewById(R.id.collectChangeTextView);
+
+        collectChangeTextView.setText("You coins\n" + "£"+mChangeCountTwoPound + "\n£" + mChangeCountOnePound + "\n" + mChangeCountOneFiftyPence + "p\n" +mChangeCountTwentyPence+ "p\n"+ mChangeCountTenPence + "p\n" + mChangeCountFivePence +"p\n" +mChangeCountTwoPence + "p\n" +mChangeCountOnePence + "p");
+        //customDialogImage = (ImageView) view.findViewById(R.id.insufficient_funds_image);
+        //Picasso.with(this).load(R.drawable.img_insufficient_funds).into(customDialogImage);
+
+        alertBuilder.setCancelable(true)
+                .setNegativeButton(R.string.collect_change, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         mInsertedAmount = 0;
                         alertBuilder.setCancelable(true);
