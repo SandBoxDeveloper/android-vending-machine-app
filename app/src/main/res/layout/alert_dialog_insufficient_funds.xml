@@ -4,26 +4,29 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:weightSum="1"
     android:gravity="center_vertical">
 
-
+    <!--
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/insufficient_funds_image"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@string/insufficient_funds_image_description"
         android:layout_above="@+id/insufficientFundTextDialog"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="39dp"
-        android:contentDescription="@string/insufficient_funds_image_description" />
+        android:layout_marginBottom="82dp" /> -->
 
     <TextView
         android:id="@+id/insufficientFundTextDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:text="@string/insufficient_funds_alert_message">
+        android:text="@string/insufficient_funds_alert_message"
+        android:layout_marginTop="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentLeft="false">
     </TextView>
 
 

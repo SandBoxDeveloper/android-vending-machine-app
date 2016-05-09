@@ -94,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
                     //Pass the image title and url to DetailsActivity
                     intent.putExtra("description", item.getDescription())
                             .putExtra("price", item.getPrice())
-                            .putExtra("image", item.getImage());
+                            .putExtra("image", item.getImage())
+                            .putExtra("quantity", item.getQauntity());
 
                     //Start details activity
                     startActivity(intent);

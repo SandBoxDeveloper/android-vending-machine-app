@@ -4,49 +4,77 @@
     <item>
         <id>A1</id>
         <price>0.85</price>
-        <item_img>http://richmedia.channeladvisor.com/ImageDelivery/imageService?profileId=52000717&amp;imageID=45983501&amp;recipeId=243</item_img>
+        <item_img>https://s3-ap-southeast-2.amazonaws.com/andrehitchman.com/android-app-img/apple.png</item_img>
         <quantity>200</quantity>
     </item>
 
     <item>
         <id>B3</id>
         <price>0.70</price>
-        <item_img>http://richmedia.channeladvisor.com/ImageDelivery/imageService?profileId=52000717&amp;imageID=45983501&amp;recipeId=243</item_img>
+        <item_img>https://s3-ap-southeast-2.amazonaws.com/andrehitchman.com/android-app-img/artichoke.png</item_img>
         <quantity>70</quantity>
     </item>
 
     <item>
         <id>E7</id>
         <price>1.70</price>
-        <item_img>http://richmedia.channeladvisor.com/ImageDelivery/imageService?profileId=52000717&amp;imageID=45983501&amp;recipeId=243</item_img>
+        <item_img>https://s3-ap-southeast-2.amazonaws.com/andrehitchman.com/android-app-img/cake.png</item_img>
         <quantity>45</quantity>
     </item>
 
     <item>
         <id>B3</id>
         <price>0.85</price>
-        <item_img>http://richmedia.channeladvisor.com/ImageDelivery/imageService?profileId=52000717&amp;imageID=45983501&amp;recipeId=243</item_img>
+        <item_img>https://s3-ap-southeast-2.amazonaws.com/andrehitchman.com/android-app-img/cookie.png</item_img>
         <quantity>10</quantity>
     </item>
 
     <item>
         <id>D3</id>
         <price>1.00</price>
-        <item_img>http://richmedia.channeladvisor.com/ImageDelivery/imageService?profileId=52000717&amp;imageID=45983501&amp;recipeId=243</item_img>
+        <item_img>https://s3-ap-southeast-2.amazonaws.com/andrehitchman.com/android-app-img/ice-cream.png</item_img>
         <quantity>40</quantity>
     </item>
 
     <item>
         <id>F3</id>
         <price>0.55</price>
-        <item_img>http://richmedia.channeladvisor.com/ImageDelivery/imageService?profileId=52000717&amp;imageID=45983501&amp;recipeId=243</item_img>
+        <item_img>https://s3-ap-southeast-2.amazonaws.com/andrehitchman.com/android-app-img/hamburger.png</item_img>
         <quantity>70</quantity>
     </item>
 
     <item>
         <id>C3</id>
         <price>0.45</price>
-        <item_img>http://richmedia.channeladvisor.com/ImageDelivery/imageService?profileId=52000717&amp;imageID=45983501&amp;recipeId=243</item_img>
+        <item_img>https://s3-ap-southeast-2.amazonaws.com/andrehitchman.com/android-app-img/lollipop.png</item_img>
+        <quantity>100</quantity>
+    </item>
+
+    <item>
+        <id>A3</id>
+        <price>1.45</price>
+        <item_img>https://s3-ap-southeast-2.amazonaws.com/andrehitchman.com/android-app-img/muffin.png</item_img>
+        <quantity>100</quantity>
+    </item>
+
+    <item>
+        <id>B5</id>
+        <price>3.45</price>
+        <item_img>https://s3-ap-southeast-2.amazonaws.com/andrehitchman.com/android-app-img/sandwich.png</item_img>
+        <quantity>100</quantity>
+    </item>
+
+    <item>
+        <id>C1</id>
+        <price>4.45</price>
+        <item_img>https://s3-ap-southeast-2.amazonaws.com/andrehitchman.com/android-app-img/taco.png</item_img>
+        <quantity>100</quantity>
+    </item>
+
+    <item>
+        <id>F1</id>
+        <price>2.45</price>
+        <item_img>https://s3-ap-southeast-2.amazonaws.com/andrehitchman.com/android-app-img/sushi.png</item_img>
         <quantity>100</quantity>
     </item>
 </stock_item>

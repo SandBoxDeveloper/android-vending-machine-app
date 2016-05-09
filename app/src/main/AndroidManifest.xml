@@ -22,7 +22,8 @@
         <activity android:name=".Activity.Activity.VendingMachineActivity">
         </activity>
 
-        <activity android:name=".Activity.Activity.DetailedViewActivity">
+        <activity android:name=".Activity.Activity.DetailedViewActivity"
+            android:parentActivityName="com.hulldiscover.zeus.vendingmachine.Activity.Activity.MainActivity">
         </activity>
     </application>
 

@@ -8,35 +8,44 @@
 
     <ImageView
         android:id="@+id/item_image"
-        android:layout_width="match_parent"
+        android:layout_width="400dp"
         android:layout_height="110dp"
         android:layout_gravity="center"
         android:scaleType="fitCenter"
         android:contentDescription="@string/stock_item_img_description"
-        android:layout_marginTop="25dp" />
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/insertCoinButton"
+        android:layout_alignStart="@+id/quantity_picker"
+        android:layout_marginTop="20dp"
+        android:layout_above="@+id/insertCoinButton" />
 
     <TextView
         android:id="@+id/stock_item_description"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:padding="10dp"
         android:textColor="#000"
         android:textSize="20sp"
         android:gravity="center_horizontal"
-        android:layout_below="@+id/item_image"
-        android:layout_alignParentStart="true" />
+        android:layout_alignTop="@+id/item_image"
+        android:layout_alignEnd="@+id/quantity_picker"
+        android:layout_marginTop="41dp"
+        android:autoText="false"
+        />
 
     <TextView
         android:id="@+id/stock_item_price"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_below="@id/stock_item_description"
         android:padding="10dp"
         android:textColor="#000"
         android:textSize="20sp"
-        android:gravity="center_horizontal" />
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/stock_item_description"
+        android:layout_alignStart="@+id/stock_item_description"
+        android:layout_marginTop="50dp" />
 
     <ImageButton
         android:layout_width="70dp"
@@ -44,8 +53,9 @@
         android:id="@+id/insertCoinButton"
         android:src="@drawable/img_insert_coin"
         android:scaleType="fitCenter"
-        android:layout_below="@+id/stock_item_price"
-        android:layout_alignEnd="@+id/user_value" />
+        android:layout_above="@+id/user_value"
+        android:layout_alignEnd="@+id/user_value"
+        android:contentDescription="@string/insert_coin_image_description" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -42,6 +42,7 @@ public class DetailedViewActivity extends AppCompatActivity {
 
 
     int minteger = 0;
+    int mQuantity = 0;
     String mChosenItem;
     public static double mInsertedAmount = 0.00;
 
@@ -65,6 +66,7 @@ public class DetailedViewActivity extends AppCompatActivity {
         String description = bundle.getString("description");
         final String price = bundle.getString("price");
         String image = bundle.getString("image");
+        mQuantity = bundle.getInt("quantity");
 
         //set chosen item image for later use
         mChosenItem = image;
@@ -81,7 +83,7 @@ public class DetailedViewActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.item_image);
         Picasso.with(this).load(image).into(imageView);
 
-        Animation translatebu= AnimationUtils.loadAnimation(this, R.animator.accelerate_decelerate);
+        Animation translatebu= AnimationUtils.loadAnimation(this, R.anim.accelerate_decelerate);
         userValue = (TextView) findViewById(R.id.user_value);
         userValue.setText("Balance: £" +mInsertedAmount);
         userValue.startAnimation(translatebu);
@@ -90,20 +92,32 @@ public class DetailedViewActivity extends AppCompatActivity {
         insertAmount = (ImageButton) findViewById(R.id.insertCoinButton);
         insertAmount.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {;
+            public void onClick(View v) {
                 View view = (LayoutInflater.from(DetailedViewActivity.this)).inflate(R.layout.alert_dialog, null);
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(DetailedViewActivity.this);
                 alertBuilder.setView(view);
                 userCoinInput = (EditText) view.findViewById(R.id.editTextDialogUserInput);
-                userCoinInput.setHint("Insert amount: £" +price);
 
+                double totalCostToPayForItem = 0; // total cost for item
+
+                //check quantity
+                if(minteger > 0) { // if quantity user wants is greater than 0
+                    totalCostToPayForItem = (Double.parseDouble(price)) * minteger; // times price by quantity
+                } else { // normal price stands
+                    totalCostToPayForItem = Double.parseDouble(price);
+                }
+
+                //show to user how much it will cost to pay for item(s)
+                userCoinInput.setHint("Insert amount: £" + totalCostToPayForItem);
+
+                //insert button for dialog
                 alertBuilder.setCancelable(true)
                         .setPositiveButton("Insert", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String input = userCoinInput.getText().toString();
                                 mInsertedAmount += Double.parseDouble(input); // update machine system with the amount the user has inserted
-                                df.format(mInsertedAmount); // formate amount to two decimal places
+                                df.format(mInsertedAmount); // format amount to two decimal places
                                 userValue.setText("Balance: " + mInsertedAmount);
                             }
                         });
@@ -120,20 +134,28 @@ public class DetailedViewActivity extends AppCompatActivity {
                 // get price of item
                 // get how much money the user has inserted into machine
                 // calculate
-                Double calculation = mInsertedAmount - Double.parseDouble(price);
+                Double calculation = mInsertedAmount - (Double.parseDouble(price) * minteger);
                 Log.d("PURCHASE BUTTON", " Calculation is: " + calculation);
-                if(Double.parseDouble(price) > mInsertedAmount) { // user doesn't have enough money
+
+                if(Double.parseDouble(price)  > mInsertedAmount) { // user doesn't have enough money
                     // alert user insufficient funds, insert more mo mo money
                     customAlertDialog();
-                    Log.d("PURCHASE BUTTON", " Calculation < 0.00 " + calculation);
-                } if (Double.parseDouble(price) == mInsertedAmount) { // exact amount needed to purchase item
+                    Log.d("PURCHASE BUTTON", " Price of item cost more than Inserted Money " + calculation);
+                }
+
+                if (Double.parseDouble(price) == mInsertedAmount) { // exact amount needed to purchase item
                     // dispense item to user
                     // with image view
                     chosenItemImageDialog();
+                    Log.d("Quantity", "old value is:" + mQuantity);
+                    mQuantity -= minteger; // minus quantity
+                    Log.d("Quantity", "new value is:" + mQuantity);
                     mInsertedAmount = 0; // reset inserted amount
                     Log.d("PURCHASE BUTTON", " Calculation == 0.00 " + calculation);
                     Log.d("PURCHASE BUTTON", "Item Dispensed");
-                } if (mInsertedAmount > Double.parseDouble(price)) { // user is owed change
+                }
+
+                /*if (mInsertedAmount > Double.parseDouble(price)) { // user is owed change
                     // dispense user's change
                     double remainder = 0;
                     for(int i = 8; i > 1; i--) {
@@ -146,7 +168,7 @@ public class DetailedViewActivity extends AppCompatActivity {
 
                     }
                     Log.d("PURCHASE BUTTON", " Change is " + remainder);
-                }
+                }*/
             }
         });
     }
@@ -193,18 +215,19 @@ public class DetailedViewActivity extends AppCompatActivity {
         final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(DetailedViewActivity.this);
         alertBuilder.setView(view);
         insufficientFundsMessage = (TextView) view.findViewById(R.id.insufficientFundTextDialog);
-        customDialogImage = (ImageView) view.findViewById(R.id.insufficient_funds_image);
-        Picasso.with(this).load(R.drawable.img_insufficient_funds).resize(100, 100).into(customDialogImage);
+        //customDialogImage = (ImageView) view.findViewById(R.id.insufficient_funds_image);
+        //Picasso.with(this).load(R.drawable.img_insufficient_funds).into(customDialogImage);
 
         alertBuilder.setCancelable(true)
                 .setNegativeButton(R.string.retry, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        mInsertedAmount = 0;
                         alertBuilder.setCancelable(true);
                     }
                 });
 
         Dialog dialog = alertBuilder.create();
         dialog.show();
-        dialog.getWindow().setLayout(600, 400);
+        //dialog.getWindow().setLayout(900, 800);
     }
 }
