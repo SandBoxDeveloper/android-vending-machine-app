@@ -24,6 +24,7 @@
         android:id="@+id/insufficient_funds_image"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/img_collect_money"
+        android:layout_above="@+id/insufficientFundTextDialog"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 

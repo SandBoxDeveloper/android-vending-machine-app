@@ -59,4 +59,8 @@ public class VendingItem {
         this.qauntity = qauntity;
     }
 
+    public void updateQuantity(int newQuantity) {
+        this.qauntity -= newQuantity;
+    }
+
 }

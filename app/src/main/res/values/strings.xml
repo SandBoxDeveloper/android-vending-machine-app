@@ -14,6 +14,7 @@
     <string name="retry">Retry</string>
     <string name="collect">Collect</string>
     <string name="collect_change">Collect Change</string>
+    <string name="dismiss">Dismiss</string>
     <string name="insufficient_funds_image_description">Insufficient funds image</string>
     <string name="insert_coin_image_description">insert coin image</string>
 </resources>

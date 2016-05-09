@@ -54,7 +54,7 @@
         <id>A3</id>
         <price>1.45</price>
         <item_img>https://s3-ap-southeast-2.amazonaws.com/andrehitchman.com/android-app-img/muffin.png</item_img>
-        <quantity>100</quantity>
+        <quantity>5</quantity>
     </item>
 
     <item>
@@ -68,13 +68,13 @@
         <id>C1</id>
         <price>4.45</price>
         <item_img>https://s3-ap-southeast-2.amazonaws.com/andrehitchman.com/android-app-img/taco.png</item_img>
-        <quantity>100</quantity>
+        <quantity>90</quantity>
     </item>
 
     <item>
         <id>F1</id>
         <price>2.45</price>
         <item_img>https://s3-ap-southeast-2.amazonaws.com/andrehitchman.com/android-app-img/sushi.png</item_img>
-        <quantity>100</quantity>
+        <quantity>50</quantity>
     </item>
 </stock_item>

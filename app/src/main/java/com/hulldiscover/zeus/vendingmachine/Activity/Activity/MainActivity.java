@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     ListView mListview;
     ListAdapter mListAdapter;
     private ArrayList<VendingItem> mListData;
+    int mUpdatedQuantity;
 
     // list of images to draw to screen
     private ArrayList<Bitmap> bitmapImagesToDraw = new ArrayList<>();
@@ -50,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
         final List<VendingItem> vendingItems;
         ArrayList<String> imageURLs = new ArrayList<String>();
 
-        //mListAdapter = new ListAdapter(this, R.layout.listview_item);
-        //mListview.setAdapter(mListAdapter);
 
         // gather vending items stock from XML file
         try {
@@ -81,6 +80,17 @@ public class MainActivity extends AppCompatActivity {
                 vendingItems.add(item);
             }*/
 
+            //TODO: NOT working, need to update stock level once a user buys
+            //retrieves the selected item data
+            /*Bundle bundle = getIntent().getExtras();
+            if (bundle != null) {
+                mUpdatedQuantity = bundle.getInt("quantityUpdate");
+            }
+            else {
+                mUpdatedQuantity = 0;
+            }*/
+
+
 
             //Grid view click event
             mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -91,6 +101,10 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, DetailedViewActivity.class);
                     ImageView imageView = (ImageView) v.findViewById(R.id.item_image);
 
+                    //TODO: NOT working, need to update stock level once a user buys
+                    /*if(mUpdatedQuantity >= 0) { //update quantity
+                        item.updateQuantity(mUpdatedQuantity);
+                    }*/
                     //Pass the image title and url to DetailsActivity
                     intent.putExtra("description", item.getDescription())
                             .putExtra("price", item.getPrice())

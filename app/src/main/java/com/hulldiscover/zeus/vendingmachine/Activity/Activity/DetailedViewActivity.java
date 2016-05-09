@@ -12,7 +12,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,24 +38,30 @@ public class DetailedViewActivity extends AppCompatActivity {
     private EditText userCoinInput;
     private ImageView imageView;
     private ImageView chosenItem;
+    private ImageView outOfStockItem;
     private ImageView customDialogImage;
-    private ImageButton insertAmount;
+    private Button insertAmount;
     private Button purchaseItem;
 
 
-    int mInteger = 0;
-    int mQuantity = 0;
-    String mPrice = "0";
-    String mChosenItem;
+    int mInteger = 1; // used to select quantity of how many items wanted
+    int mQuantity = 0; // stock level of items
+    String mPrice = "0"; // price of item
+    String mChosenItem; // chosen item code number
     public static double mInsertedAmount = 0.00;
     Double mChange = 0.00;
-    Double mChangeCountTwoPound, mChangeCountOnePound, mChangeCountOneFiftyPence, mChangeCountTwentyPence, mChangeCountTenPence, mChangeCountFivePence, mChangeCountTwoPence, mChangeCountOnePence = 0.00;
+    //track how much change is owed to user
+    Double mChangeCountTwoPound = 0.00;
+    Double mChangeCountOnePound = 0.00;
+    Double mChangeCountOneFiftyPence = 0.00;
+    Double mChangeCountTwentyPence = 0.00;
+    Double mChangeCountTenPence = 0.00;
+    Double mChangeCountFivePence = 0.00;
+    Double mChangeCountTwoPence = 0.00;
+    Double mChangeCountOnePence = 0.00;
 
     //change denominations
-    //double[] denominations = {0.01, 0.02, 0.05, 0.10, 0.20, 0.50, 1.00, 2.00};
     List<Double> denominations = new ArrayList<>(Arrays.asList(0.01, 0.02, 0.05, 0.10, 0.20, 0.50, 1.00, 2.00));
-
-    List<Double> changeCount = new ArrayList<>(Arrays.asList(0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00));
     DecimalFormat df = new DecimalFormat("#.00");
 
 
@@ -77,25 +82,33 @@ public class DetailedViewActivity extends AppCompatActivity {
         //set chosen item image for later use
         mChosenItem = image;
 
+        //check if item is in stock
+        //TODO: Would be nice to display that the item is not in stock on the previous liveView screen
+        /*if(mQuantity <= 0) { // item not in stock display message
+            //alert user
+            //TODO: NOT working, need to update stock level once a user buys
+            itemIsOutOfStockAlertDialog();
+        }*/
+
         //initialize and set the image description
         titleTextView = (TextView) findViewById(R.id.stock_item_description);
         titleTextView.setText(description);
 
         itemPrice = (TextView) findViewById(R.id.stock_item_price);
-        itemPrice.setText("£" +mPrice);
+        itemPrice.setText("£" + mPrice);
 
 
         //Set image url
         imageView = (ImageView) findViewById(R.id.item_image);
         Picasso.with(this).load(image).into(imageView);
 
-        Animation translatebu= AnimationUtils.loadAnimation(this, R.anim.accelerate_decelerate);
+        Animation translatebu = AnimationUtils.loadAnimation(this, R.anim.accelerate_decelerate);
         userValue = (TextView) findViewById(R.id.user_value);
-        userValue.setText("Balance: £" +mInsertedAmount);
+        userValue.setText("Balance: £" + mInsertedAmount);
         userValue.startAnimation(translatebu);
 
         //initialize insert money button
-        insertAmount = (ImageButton) findViewById(R.id.insertCoinButton);
+        insertAmount = (Button) findViewById(R.id.insertCoinButton);
         insertAmount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +120,7 @@ public class DetailedViewActivity extends AppCompatActivity {
                 double totalCostToPayForItem = 0; // total cost for item
 
                 //check quantity
-                if(mInteger > 0) { // if quantity user wants is greater than 0
+                if (mInteger > 0) { // if quantity user wants is greater than 0
                     totalCostToPayForItem = (Double.parseDouble(mPrice)) * mInteger; // times mPrice by quantity
                 } else { // normal mPrice stands
                     totalCostToPayForItem = Double.parseDouble(mPrice);
@@ -142,18 +155,18 @@ public class DetailedViewActivity extends AppCompatActivity {
                 // calculate
                 //check quantity
                 double costOfItem = 0.00;
-                if(mInteger > 0) { // if quantity user wants is greater than 0
+                if (mInteger > 0) { // if quantity user wants is greater than 0
                     mChange = mInsertedAmount - ((Double.parseDouble(mPrice)) * mInteger); // times mPrice by quantity
                     costOfItem = (Double.parseDouble(mPrice)) * mInteger; // true cost of items
                 } else { // normal mPrice stands
                     mChange = mInsertedAmount - (Double.parseDouble(mPrice));
                     costOfItem = Double.parseDouble(mPrice);
                 }
+
                 double changeOwed = mChange;
-                //Double mChange = mInsertedAmount - (Double.parseDouble(mPrice) * mInteger);
                 Log.d("PURCHASE BUTTON", " Change owed is: " + changeOwed);
 
-                if(costOfItem > mInsertedAmount) { // user doesn't have enough money
+                if (costOfItem > mInsertedAmount) { // user doesn't have enough money
                     // alert user insufficient funds, insert more mo mo money
                     customAlertDialog();
                     Log.d("PURCHASE BUTTON", " Price of item cost more than Inserted Money " + mChange);
@@ -165,6 +178,14 @@ public class DetailedViewActivity extends AppCompatActivity {
                     chosenItemImageDialog();
                     Log.d("Quantity", "old value is:" + mQuantity);
                     mQuantity -= mInteger; // minus quantity
+
+                    //TODO: NOT working, need to update stock level once a user buys
+                    //update machine with quantity
+                    //pass data
+                    //Intent intent = new Intent(DetailedViewActivity.this, MainActivity.class);
+                    //intent.putExtra("quantityUpdate", mQuantity);
+
+
                     Log.d("Quantity", "new value is:" + mQuantity);
                     // no change needed
                     mInsertedAmount = 0; // reset inserted amount
@@ -191,7 +212,7 @@ public class DetailedViewActivity extends AppCompatActivity {
                     }
 
                     changeOwed = changeOwed - twoPound;
-                    Log.d("AMOUNT LEFT", "" +changeOwed);
+                    Log.d("AMOUNT LEFT", "" + changeOwed);
 
                     double onePound = changeOwed / 1.00;
                     if (onePound > 0) {
@@ -203,7 +224,7 @@ public class DetailedViewActivity extends AppCompatActivity {
 
                         if (mChange > 0) { // check to see if any £1 coins have been given as change
                             changeOwed = changeOwed - onePound;
-                            Log.d("AMOUNT LEFT", "" +changeOwed);
+                            Log.d("AMOUNT LEFT", "" + changeOwed);
                         }
                     }
 
@@ -217,7 +238,7 @@ public class DetailedViewActivity extends AppCompatActivity {
 
                         if (mChange > 0) { // check to see if any 50p coins have been given as change
                             changeOwed = changeOwed - fiftyPence;
-                            Log.d("AMOUNT LEFT", "" +changeOwed);
+                            Log.d("AMOUNT LEFT", "" + changeOwed);
                         }
                     }
 
@@ -231,11 +252,11 @@ public class DetailedViewActivity extends AppCompatActivity {
 
                         if (mChange > 0) { // check to see if any 20p coins have been given as change
                             changeOwed = changeOwed - twentyPence;
-                            Log.d("AMOUNT LEFT", "" +changeOwed);
+                            Log.d("AMOUNT LEFT", "" + changeOwed);
                         }
                     }
 
-                    Log.d("20p CHECK", "" +changeOwed);
+                    Log.d("20p CHECK", "" + changeOwed);
                     double tenPence = changeOwed / 0.10;
                     if (tenPence > 0) {
                         mChange = changeOwed / 0.10;
@@ -246,7 +267,7 @@ public class DetailedViewActivity extends AppCompatActivity {
 
                         if (mChange > 0) { // check to see if any 10p coins have been given as change
                             changeOwed = changeOwed - tenPence;
-                            Log.d("AMOUNT LEFT", "" +changeOwed);
+                            Log.d("AMOUNT LEFT", "" + changeOwed);
                         }
 
                     }
@@ -261,7 +282,7 @@ public class DetailedViewActivity extends AppCompatActivity {
 
                         if (mChange > 0) { // check to see if any 5p coins have been given as change
                             changeOwed = changeOwed - fivePence;
-                            Log.d("AMOUNT LEFT", "" +changeOwed);
+                            Log.d("AMOUNT LEFT", "" + changeOwed);
                         }
                     }
 
@@ -275,7 +296,7 @@ public class DetailedViewActivity extends AppCompatActivity {
 
                         if (mChange > 0) { // check to see if any 2p coins have been given as change
                             changeOwed = changeOwed - twoPence;
-                            Log.d("AMOUNT LEFT", "" +changeOwed);
+                            Log.d("AMOUNT LEFT", "" + changeOwed);
                         }
                     }
 
@@ -289,30 +310,47 @@ public class DetailedViewActivity extends AppCompatActivity {
 
                         if (mChange > 0) { // check to see if any 1p coins have been given as change
                             changeOwed = changeOwed - onePence;
-                            Log.d("AMOUNT LEFT", "" +changeOwed);
+                            Log.d("AMOUNT LEFT", "" + changeOwed);
                         }
                     }
 
                     giveChangeAlertDialog();
                     //reset inserted coins amount
                     mInsertedAmount = 0;
+                    //update quantity
+                    mQuantity -= mInteger; // minus quantity
+                    //TODO: NOT working, need to update stock level once a user buys
+                    //update machine with quantity
+                    //pass data
+                    //Intent intent = new Intent(DetailedViewActivity.this, MainActivity.class);
+                    //intent.putExtra("quantityUpdate", mQuantity);
+
                     Log.d("PURCHASE BUTTON", " User is owed change " + mChange);
-                    Log.d("PURCHASE BUTTON", " User is owed change " + mChangeCountTwoPound + "" + mChangeCountOnePound + "" + mChangeCountOneFiftyPence + "" +mChangeCountTwentyPence + mChangeCountTenPence + mChangeCountFivePence + mChangeCountTwoPence + mChangeCountOnePence);
+                    Log.d("PURCHASE BUTTON", " User is owed change " + mChangeCountTwoPound + "" + mChangeCountOnePound + "" + mChangeCountOneFiftyPence + "" + mChangeCountTwentyPence + mChangeCountTenPence + mChangeCountFivePence + mChangeCountTwoPence + mChangeCountOnePence);
                 }
             }
         });
     }
 
+    //methods to change quantity values
     public void increaseInteger(View view) {
         mInteger = mInteger + 1;
         display(mInteger);
 
-    }public void decreaseInteger(View view) {
+    }
+
+    public void decreaseInteger(View view) {
         mInteger = mInteger - 1;
-        if(mInteger < 0) {
+        if (mInteger < 0) {
             mInteger = 0; // reset value to 0 to prevent quantity less than 0
         }
         display(mInteger);
+    }
+
+    private void display(int number) {
+        TextView displayInteger = (TextView) findViewById(
+                R.id.integer_number);
+        displayInteger.setText("" + number);
     }
 
     //function to round double
@@ -324,24 +362,19 @@ public class DetailedViewActivity extends AppCompatActivity {
         return bd.doubleValue();
     }
 
-    private void display(int number) {
-        TextView displayInteger = (TextView) findViewById(
-                R.id.integer_number);
-        displayInteger.setText("" + number);
-    }
-
+    //dialog shown when users has successful purchased an item
     public void chosenItemImageDialog() {
         View view = (LayoutInflater.from(DetailedViewActivity.this)).inflate(R.layout.alert_dialog_collect_item, null);
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(DetailedViewActivity.this);
         alertBuilder.setView(view);
         chosenItem = (ImageView) view.findViewById(R.id.chosen_item_image);
-        Picasso.with(this).load(mChosenItem).into(chosenItem);
+        Picasso.with(this).load(mChosenItem).resize(200,200).into(chosenItem);
 
         alertBuilder.setCancelable(true)
                 .setPositiveButton(R.string.collect, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                       finish();
+                        finish();
                     }
                 });
         Dialog dialog = alertBuilder.create();
@@ -356,12 +389,12 @@ public class DetailedViewActivity extends AppCompatActivity {
         insufficientFundsMessage = (TextView) view.findViewById(R.id.insufficientFundTextDialog);
         // check quantity chosen
         double costOfItem;
-        if(mInteger > 0) { // if quantity user wants is greater than 0
+        if (mInteger > 0) { // if quantity user wants is greater than 0
             costOfItem = (Double.parseDouble(mPrice)) * mInteger; // times mPrice by quantity
         } else { // normal mPrice stands
             costOfItem = Double.parseDouble(mPrice);
         }
-        insufficientFundsMessage.setText(R.string.insufficient_funds_alert_message + "\n" + "Insert: £" +costOfItem);
+        insufficientFundsMessage.setText(R.string.insufficient_funds_alert_message + "\n" + "Insert: £" + costOfItem);
         //customDialogImage = (ImageView) view.findViewById(R.id.insufficient_funds_image);
         //Picasso.with(this).load(R.drawable.img_insufficient_funds).into(customDialogImage);
 
@@ -378,20 +411,25 @@ public class DetailedViewActivity extends AppCompatActivity {
         //dialog.getWindow().setLayout(900, 800);
     }
 
+    //alert dialog to display purchased item and how much change user is given
     public void giveChangeAlertDialog() {
         View view = (LayoutInflater.from(DetailedViewActivity.this)).inflate(R.layout.alert_dialog_collect_change, null);
         final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(DetailedViewActivity.this);
         alertBuilder.setView(view);
+        //imageView
+        chosenItem = (ImageView) view.findViewById(R.id.chosen_item_image);
+        Picasso.with(this).load(mChosenItem).into(chosenItem);
+        //textView
         collectChangeTextView = (TextView) view.findViewById(R.id.collectChangeTextView);
+        //TODO: Reformat layout to position message of how much change a user receives
+        collectChangeTextView.setText("Your coins\n" + "£" + mChangeCountTwoPound + "\n£" + mChangeCountOnePound + "\n" + mChangeCountOneFiftyPence + "p\n" + mChangeCountTwentyPence + "p\n" + mChangeCountTenPence + "p\n" + mChangeCountFivePence + "p\n" + mChangeCountTwoPence + "p\n" + mChangeCountOnePence + "p");
 
-        collectChangeTextView.setText("You coins\n" + "£"+mChangeCountTwoPound + "\n£" + mChangeCountOnePound + "\n" + mChangeCountOneFiftyPence + "p\n" +mChangeCountTwentyPence+ "p\n"+ mChangeCountTenPence + "p\n" + mChangeCountFivePence +"p\n" +mChangeCountTwoPence + "p\n" +mChangeCountOnePence + "p");
-        //customDialogImage = (ImageView) view.findViewById(R.id.insufficient_funds_image);
-        //Picasso.with(this).load(R.drawable.img_insufficient_funds).into(customDialogImage);
 
         alertBuilder.setCancelable(true)
-                .setNegativeButton(R.string.collect_change, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.collect, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         mInsertedAmount = 0;
+                        userValue.setText("Balance: " + mInsertedAmount); // update screen with balance
                         alertBuilder.setCancelable(true);
                     }
                 });
@@ -399,5 +437,26 @@ public class DetailedViewActivity extends AppCompatActivity {
         Dialog dialog = alertBuilder.create();
         dialog.show();
         //dialog.getWindow().setLayout(900, 800);
+    }
+
+    //alert dialog to display that this item is out of stock
+    public void itemIsOutOfStockAlertDialog() {
+        View view = (LayoutInflater.from(DetailedViewActivity.this)).inflate(R.layout.alert_dialog_item_out_of_stock, null);
+        final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(DetailedViewActivity.this);
+        alertBuilder.setView(view);
+        //imageView
+        outOfStockItem = (ImageView) view.findViewById(R.id.item_out_of_stock);
+        Picasso.with(this).load(R.drawable.img_item_out_of_stock).into(chosenItem);
+
+
+        alertBuilder.setCancelable(true)
+                .setNegativeButton(R.string.dismiss, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish(); // return back to listView
+                    }
+                });
+
+        Dialog dialog = alertBuilder.create();
+        dialog.show();
     }
 }

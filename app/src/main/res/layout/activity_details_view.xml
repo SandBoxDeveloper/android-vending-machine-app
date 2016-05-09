@@ -9,15 +9,16 @@
     <ImageView
         android:id="@+id/item_image"
         android:layout_width="400dp"
-        android:layout_height="110dp"
+        android:layout_height="160dp"
         android:layout_gravity="center"
         android:scaleType="fitCenter"
         android:contentDescription="@string/stock_item_img_description"
+        android:background="@drawable/border"
         android:layout_alignParentTop="true"
-        android:layout_alignEnd="@+id/insertCoinButton"
         android:layout_alignStart="@+id/quantity_picker"
-        android:layout_marginTop="20dp"
-        android:layout_above="@+id/insertCoinButton" />
+        android:layout_marginTop="40dp"
+        android:layout_toStartOf="@+id/stock_item_description"
+        android:layout_alignBottom="@+id/user_value" />
 
     <TextView
         android:id="@+id/stock_item_description"
@@ -31,7 +32,6 @@
         android:layout_alignTop="@+id/item_image"
         android:layout_alignEnd="@+id/quantity_picker"
         android:layout_marginTop="41dp"
-        android:autoText="false"
         />
 
     <TextView
@@ -44,18 +44,19 @@
         android:textSize="20sp"
         android:gravity="center_horizontal"
         android:layout_below="@+id/stock_item_description"
-        android:layout_alignStart="@+id/stock_item_description"
-        android:layout_marginTop="50dp" />
+        android:layout_alignEnd="@+id/quantity_picker"
+        android:layout_marginTop="31dp" />
 
-    <ImageButton
+    <!--<ImageButton
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:id="@+id/insertCoinButton"
         android:src="@drawable/img_insert_coin"
         android:scaleType="fitCenter"
-        android:layout_above="@+id/user_value"
-        android:layout_alignEnd="@+id/user_value"
-        android:contentDescription="@string/insert_coin_image_description" />
+        android:contentDescription="@string/insert_coin_image_description"
+        android:layout_alignBottom="@+id/button"
+        android:layout_alignStart="@+id/user_value"
+        android:layout_marginStart="37dp" />-->
 
     <TextView
         android:layout_width="wrap_content"
@@ -63,9 +64,8 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Balance: "
         android:id="@+id/user_value"
-        android:layout_above="@+id/quantity_picker"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp" />
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/item_image" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -109,7 +109,7 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
                 android:layout_marginTop="5dp"
-                android:text="0"
+                android:text="1"
                 android:textStyle="bold"
                 android:textSize="20sp" />
 
@@ -131,5 +131,15 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:text="insert coins"
+        android:id="@+id/insertCoinButton"
+        android:layout_below="@+id/item_image"
+        android:layout_alignEnd="@+id/stock_item_price"
+        android:layout_marginTop="28dp"
+        android:textSize="9sp" />
 
 </RelativeLayout>
