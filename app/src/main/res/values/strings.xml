@@ -6,13 +6,13 @@
     <string name="add_balance">Add: </string>
     <string name="total">£0:00</string>
     <string name="quantity">Quantity: </string>
-    <string name="stock_image">stock_image</string>
-    <string name="stock_item_image">stock_item_image</string>
-    <string name="stock_item_img_description">stock_item_image</string>
+    <string name="stock_image">stock item image</string>
+    <string name="stock_item_image">stock item image</string>
+    <string name="stock_item_img_description">stock item image</string>
     <string name="insert_amount">Insert amount</string>
     <string name="insufficient_funds_alert_message">Insufficient Funds, Please Insert More Coins</string>
     <string name="retry">Retry</string>
     <string name="collect">Collect</string>
-    <string name="insufficient_funds_image_description">Insufficient_funds_image</string>
-    <string name="insert_coin_image_description">insert_coin_image</string>
+    <string name="insufficient_funds_image_description">Insufficient funds image</string>
+    <string name="insert_coin_image_description">insert coin image</string>
 </resources>

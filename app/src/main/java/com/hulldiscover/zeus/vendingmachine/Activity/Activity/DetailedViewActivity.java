@@ -41,8 +41,9 @@ public class DetailedViewActivity extends AppCompatActivity {
     private Button purchaseItem;
 
 
-    int minteger = 0;
+    int mInteger = 0;
     int mQuantity = 0;
+    String mPrice = "0";
     String mChosenItem;
     public static double mInsertedAmount = 0.00;
 
@@ -64,7 +65,7 @@ public class DetailedViewActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         String description = bundle.getString("description");
-        final String price = bundle.getString("price");
+        mPrice = bundle.getString("price");
         String image = bundle.getString("image");
         mQuantity = bundle.getInt("quantity");
 
@@ -76,7 +77,7 @@ public class DetailedViewActivity extends AppCompatActivity {
         titleTextView.setText(description);
 
         itemPrice = (TextView) findViewById(R.id.stock_item_price);
-        itemPrice.setText("£" +price);
+        itemPrice.setText("£" +mPrice);
 
 
         //Set image url
@@ -101,10 +102,10 @@ public class DetailedViewActivity extends AppCompatActivity {
                 double totalCostToPayForItem = 0; // total cost for item
 
                 //check quantity
-                if(minteger > 0) { // if quantity user wants is greater than 0
-                    totalCostToPayForItem = (Double.parseDouble(price)) * minteger; // times price by quantity
-                } else { // normal price stands
-                    totalCostToPayForItem = Double.parseDouble(price);
+                if(mInteger > 0) { // if quantity user wants is greater than 0
+                    totalCostToPayForItem = (Double.parseDouble(mPrice)) * mInteger; // times mPrice by quantity
+                } else { // normal mPrice stands
+                    totalCostToPayForItem = Double.parseDouble(mPrice);
                 }
 
                 //show to user how much it will cost to pay for item(s)
@@ -131,31 +132,41 @@ public class DetailedViewActivity extends AppCompatActivity {
         purchaseItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // get price of item
+                // get mPrice of item
                 // get how much money the user has inserted into machine
                 // calculate
-                Double calculation = mInsertedAmount - (Double.parseDouble(price) * minteger);
+                //check quantity
+                Double calculation = 0.00;
+                double costOfItem = 0.00;
+                if(mInteger > 0) { // if quantity user wants is greater than 0
+                    calculation = mInsertedAmount - ((Double.parseDouble(mPrice)) * mInteger); // times mPrice by quantity
+                    costOfItem = (Double.parseDouble(mPrice)) * mInteger;
+                } else { // normal mPrice stands
+                    calculation = mInsertedAmount - (Double.parseDouble(mPrice));
+                    costOfItem = Double.parseDouble(mPrice);
+                }
+                //Double calculation = mInsertedAmount - (Double.parseDouble(mPrice) * mInteger);
                 Log.d("PURCHASE BUTTON", " Calculation is: " + calculation);
 
-                if(Double.parseDouble(price)  > mInsertedAmount) { // user doesn't have enough money
+                if(costOfItem > mInsertedAmount) { // user doesn't have enough money
                     // alert user insufficient funds, insert more mo mo money
                     customAlertDialog();
                     Log.d("PURCHASE BUTTON", " Price of item cost more than Inserted Money " + calculation);
                 }
 
-                if (Double.parseDouble(price) == mInsertedAmount) { // exact amount needed to purchase item
+                if (mInsertedAmount == costOfItem) { // exact amount needed to purchase item
                     // dispense item to user
                     // with image view
                     chosenItemImageDialog();
                     Log.d("Quantity", "old value is:" + mQuantity);
-                    mQuantity -= minteger; // minus quantity
+                    mQuantity -= mInteger; // minus quantity
                     Log.d("Quantity", "new value is:" + mQuantity);
                     mInsertedAmount = 0; // reset inserted amount
                     Log.d("PURCHASE BUTTON", " Calculation == 0.00 " + calculation);
                     Log.d("PURCHASE BUTTON", "Item Dispensed");
                 }
 
-                /*if (mInsertedAmount > Double.parseDouble(price)) { // user is owed change
+                /*if (mInsertedAmount > Double.parseDouble(mPrice)) { // user is owed change
                     // dispense user's change
                     double remainder = 0;
                     for(int i = 8; i > 1; i--) {
@@ -174,15 +185,15 @@ public class DetailedViewActivity extends AppCompatActivity {
     }
 
     public void increaseInteger(View view) {
-        minteger = minteger + 1;
-        display(minteger);
+        mInteger = mInteger + 1;
+        display(mInteger);
 
     }public void decreaseInteger(View view) {
-        minteger = minteger - 1;
-        if(minteger < 0) {
-            minteger = 0; // reset value to 0 to prevent quantity less than 0
+        mInteger = mInteger - 1;
+        if(mInteger < 0) {
+            mInteger = 0; // reset value to 0 to prevent quantity less than 0
         }
-        display(minteger);
+        display(mInteger);
     }
 
     private void display(int number) {
@@ -215,6 +226,14 @@ public class DetailedViewActivity extends AppCompatActivity {
         final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(DetailedViewActivity.this);
         alertBuilder.setView(view);
         insufficientFundsMessage = (TextView) view.findViewById(R.id.insufficientFundTextDialog);
+        // check quantity chosen
+        double costOfItem;
+        if(mInteger > 0) { // if quantity user wants is greater than 0
+            costOfItem = (Double.parseDouble(mPrice)) * mInteger; // times mPrice by quantity
+        } else { // normal mPrice stands
+            costOfItem = Double.parseDouble(mPrice);
+        }
+        insufficientFundsMessage.setText(R.string.insufficient_funds_alert_message + "\n" + "Insert: £" +costOfItem);
         //customDialogImage = (ImageView) view.findViewById(R.id.insufficient_funds_image);
         //Picasso.with(this).load(R.drawable.img_insufficient_funds).into(customDialogImage);
 
