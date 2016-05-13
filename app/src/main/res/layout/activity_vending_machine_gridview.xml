@@ -10,7 +10,7 @@
         android:id="@+id/balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/balance"
+        android:text="@string/credit"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_above="@+id/purchaseTotal"
         android:layout_alignStart="@+id/gridView"
@@ -25,6 +25,16 @@
         android:layout_marginBottom="40dp"
         android:layout_above="@+id/gridView"
         android:layout_alignStart="@+id/balance" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="25dp"
+        android:text="insert coins"
+        android:id="@+id/insertCoinButton"
+        android:textSize="9sp"
+        android:layout_above="@+id/gridView"
+        android:layout_alignStart="@+id/add_balance"
+        android:layout_alignEnd="@+id/add_balance" />
 
     <TextView
         android:id="@+id/purchaseTotal"
@@ -52,7 +62,8 @@
         android:gravity="center"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="5dp" />
+        android:verticalSpacing="5dp"
+        />
 
 
 
@@ -73,18 +84,45 @@
             android:text="@string/quantity"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_alignWithParentIfMissing="false"
-            android:layout_marginStart="31dp"
-            android:layout_alignTop="@+id/numberPicker"
+            android:layout_marginStart="26dp"
+            android:layout_alignTop="@+id/linearLayout"
             android:layout_alignParentStart="true" />
 
-        <NumberPicker
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:id="@+id/numberPicker"
-            android:layout_above="@+id/purchase_button"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="30dp"
-            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_toEndOf="@+id/quantity"
+            android:id="@+id/linearLayout">
+
+            <Button
+                android:id="@+id/decrease"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:onClick="decreaseInteger"
+                android:text="-" />
+
+            <TextView
+                android:id="@+id/integer_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="5dp"
+                android:text="1"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/increase"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:onClick="increaseInteger"
+                android:text="+" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/purchase_button"

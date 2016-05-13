@@ -60,7 +60,6 @@ public class VendingMachineGridAdapter extends ArrayAdapter<VendingItem> {
 
         VendingItem item = getItem(position);
         holder.titleTextView.setText(item.getDescription());
-        //holder.imageView.setImageBitmap(item.getImageBitmap());
         Picasso.with(mContext).load(item.getImage()).into(holder.imageView);
         return row;
     }

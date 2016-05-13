@@ -7,14 +7,13 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Zeus on 07/05/16.
  */
 public class XMLPullParserHandler {
 
-    List<VendingItem> vendingItemsStock;
+    ArrayList<VendingItem> vendingItemsStock;
 
     private VendingItem vendingItem;
     private String text;
@@ -23,11 +22,11 @@ public class XMLPullParserHandler {
         vendingItemsStock = new ArrayList<VendingItem>();
     }
 
-    public List<VendingItem> getVendingItemsStock() {
+    public ArrayList<VendingItem> getVendingItemsStock() {
         return vendingItemsStock;
     }
 
-    public List<VendingItem> parse(InputStream inputStream) {
+    public ArrayList<VendingItem> parse(InputStream inputStream) {
         XmlPullParserFactory factory = null;
         XmlPullParser parser = null;
 

@@ -394,7 +394,7 @@ public class DetailedViewActivity extends AppCompatActivity {
         } else { // normal mPrice stands
             costOfItem = Double.parseDouble(mPrice);
         }
-        insufficientFundsMessage.setText(R.string.insufficient_funds_alert_message + "\n" + "Insert: £" + costOfItem);
+        insufficientFundsMessage.setText(getText(R.string.insufficient_funds_alert_message) + "\n" + "Insert: £" + costOfItem);
         //customDialogImage = (ImageView) view.findViewById(R.id.insufficient_funds_image);
         //Picasso.with(this).load(R.drawable.img_insufficient_funds).into(customDialogImage);
 

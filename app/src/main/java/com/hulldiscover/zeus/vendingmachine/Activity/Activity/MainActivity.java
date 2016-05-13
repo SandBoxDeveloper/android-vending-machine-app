@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         mListview = (ListView)findViewById(R.id.listView);
 
         // list of vending stock
-        final List<VendingItem> vendingItems;
+        final ArrayList<VendingItem> vendingItems;
         ArrayList<String> imageURLs = new ArrayList<String>();
 
 

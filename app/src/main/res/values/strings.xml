@@ -2,8 +2,8 @@
     <string name="app_name">Onfindo Vending Machine</string>
 
     <string name="purchase_button">PURCHASE</string>
-    <string name="balance">Balance: </string>
-    <string name="add_balance">Add: </string>
+    <string name="credit">Credit: </string>
+    <string name="add_balance">INSERT COINS BELOW: </string>
     <string name="total">£0:00</string>
     <string name="quantity">Quantity: </string>
     <string name="stock_image">stock item image</string>
