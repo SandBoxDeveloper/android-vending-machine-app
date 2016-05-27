@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Onfindo Vending Machine</string>
+    <string name="app_name">Vending Machine</string>
 
     <string name="purchase_button">PURCHASE</string>
     <string name="credit">Credit: </string>
